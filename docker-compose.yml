@@ -7,7 +7,7 @@ services:
       MYSQL_DATABASE: kernel_panic_db
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -19,7 +19,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/kernel_panic_db?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3307/kernel_panic_db?allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
     volumes:
