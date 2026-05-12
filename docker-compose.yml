@@ -7,10 +7,14 @@ services:
       MYSQL_DATABASE: kernel_panic_db
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3306:3306"
+        - "3312:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
   app:
     build:
       context: ./usuario-service
@@ -26,7 +30,7 @@ services:
       - ./usuario-service:/app
       - ~/.m2:/root/.m2
     depends_on:
-      - db
-
+      db:
+        condition: service_healthy
 volumes:
   mysql_data:
