@@ -6,6 +6,7 @@ services:
     environment:
       MYSQL_DATABASE: kernel_panic_db
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
     ports:
         - "3312:3306"
     volumes:

@@ -26,6 +26,8 @@ public class UsuarioExibirDTO {
     @NotBlank(message = "O salário não pode ser nulo")
     private String salario;
 
+    private String tipoContrato;
+
     @NotNull(message = "A data de criação é obrigatória")
     private LocalDateTime dataCriacao;
 }

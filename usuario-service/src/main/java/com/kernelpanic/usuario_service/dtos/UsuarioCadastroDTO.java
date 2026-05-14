@@ -30,4 +30,7 @@ public class UsuarioCadastroDTO {
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 6, max = 255, message = "A senha deve ter no minimo 6 caracteres")
     private String senha;
+
+    @Size(max = 50, message = "O tipo de contrato não pode ultrapassar 50 caracteres")
+    private String tipoContrato;
 }

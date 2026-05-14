@@ -30,4 +30,7 @@ public class UsuarioAtualizarDTO {
 
     @Size(max = 255, message = "A senha não pode ultrapassar 255 caracteres")
     private String senha;
+
+    @Size(max = 50, message = "O tipo de contrato não pode ultrapassar 50 caracteres")
+    private String tipoContrato;
 }
