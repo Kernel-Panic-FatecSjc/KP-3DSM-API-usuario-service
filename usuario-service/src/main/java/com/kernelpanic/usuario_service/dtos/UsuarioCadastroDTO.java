@@ -33,4 +33,6 @@ public class UsuarioCadastroDTO {
 
     @Size(max = 50, message = "O tipo de contrato não pode ultrapassar 50 caracteres")
     private String tipoContrato;
+
+    private Boolean ativo;
 }

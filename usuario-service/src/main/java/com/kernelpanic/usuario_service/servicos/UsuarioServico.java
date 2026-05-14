@@ -55,7 +55,7 @@ public class UsuarioServico {
         usuario.setNome(atualizacao.getNome());
         usuario.setCargo(atualizacao.getCargo());
         usuario.setEmail(atualizacao.getEmail());
-        usuario.setSalario(usuario.getSalario());
+        usuario.setSalario(atualizacao.getSalario());
         usuario.setTipoContrato(atualizacao.getTipoContrato());
         
 

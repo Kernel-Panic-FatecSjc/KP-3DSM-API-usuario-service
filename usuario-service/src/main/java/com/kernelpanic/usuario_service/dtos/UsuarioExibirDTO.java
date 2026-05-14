@@ -30,4 +30,6 @@ public class UsuarioExibirDTO {
 
     @NotNull(message = "A data de criação é obrigatória")
     private LocalDateTime dataCriacao;
+
+    private Boolean ativo;
 }
