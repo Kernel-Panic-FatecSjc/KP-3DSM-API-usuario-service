@@ -56,6 +56,7 @@ public class UsuarioServico {
         usuario.setCargo(atualizacao.getCargo());
         usuario.setEmail(atualizacao.getEmail());
         usuario.setSalario(usuario.getSalario());
+        usuario.setTipoContrato(atualizacao.getTipoContrato());
         
 
         if (atualizacao.getGerente() != null && atualizacao.getGerente().getId() != null) {
@@ -97,6 +98,7 @@ public class UsuarioServico {
         dto.setEmail(usuario.getEmail());
         dto.setDataCriacao(usuario.getDataCriacao());
         dto.setSalario(usuario.getSalario());
+        dto.setTipoContrato(usuario.getTipoContrato());
 
         return dto;
     }
@@ -109,6 +111,7 @@ public class UsuarioServico {
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
         usuario.setSalario(dto.getSalario());
+        usuario.setTipoContrato(dto.getTipoContrato());
 
         if (dto.getGerenteId() != null) {
             Usuario gerente = new Usuario();
@@ -128,6 +131,7 @@ public class UsuarioServico {
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
         usuario.setSalario(dto.getSalario());
+        usuario.setTipoContrato(dto.getTipoContrato());
         
 
 
