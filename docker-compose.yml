@@ -16,6 +16,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - kernelpanic-net
   app:
     build:
       context: ./usuario-service
@@ -33,5 +35,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - kernelpanic-net
+networks:
+  kernelpanic-net:
+    external: true
 volumes:
   mysql_data:

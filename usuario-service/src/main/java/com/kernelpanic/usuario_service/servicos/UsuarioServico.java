@@ -14,6 +14,10 @@ import com.kernelpanic.usuario_service.entidades.Usuario;
 import com.kernelpanic.usuario_service.excecoes.EntidadeNaoEncontradaException;
 import com.kernelpanic.usuario_service.repositorios.UsuarioRepositorio;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.web.client.RestTemplate;
+
 @Service
 public class UsuarioServico {
 
@@ -22,6 +26,8 @@ public class UsuarioServico {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public List<UsuarioExibirDTO> obterTodos() {
         List<Usuario> usuarios = repositorio.findAll();
@@ -33,9 +39,9 @@ public class UsuarioServico {
     public UsuarioExibirDTO obterPorId(Long id) {
         Usuario usuario = repositorio.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        "Usuário não encontrado",
-                        "Não foi possível localizar um usuário com o ID: " + id
-                ));
+                "Usuário não encontrado",
+                "Não foi possível localizar um usuário com o ID: " + id
+        ));
 
         return converterParaExibirDTO(usuario);
     }
@@ -43,21 +49,31 @@ public class UsuarioServico {
     public void cadastrar(Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         repositorio.save(usuario);
+        try {
+            Map<String, Object> authPayload = new HashMap<>();
+            authPayload.put("nome", usuario.getNome());
+            authPayload.put("email", usuario.getEmail());
+            authPayload.put("senha", usuario.getSenha());
+            authPayload.put("cargo", usuario.getCargo());
+            authPayload.put("salario", usuario.getSalario());
+            restTemplate.postForObject("http://auth-service-app:8081/auth/cadastro", authPayload, Void.class);
+        } catch (Exception e) {
+            System.err.println("ERRO AO CADASTRAR NO AUTH-SERVICE: " + e.getMessage());
+        }
     }
 
     public void atualizar(Usuario atualizacao) {
         Usuario usuario = repositorio.findById(atualizacao.getId())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        "Atualização impossível",
-                        "O usuário de ID " + atualizacao.getId() + " não foi encontrado."
-                ));
+                "Atualização impossível",
+                "O usuário de ID " + atualizacao.getId() + " não foi encontrado."
+        ));
 
         usuario.setNome(atualizacao.getNome());
         usuario.setCargo(atualizacao.getCargo());
         usuario.setEmail(atualizacao.getEmail());
         usuario.setSalario(atualizacao.getSalario());
         usuario.setTipoContrato(atualizacao.getTipoContrato());
-        
 
         if (atualizacao.getGerente() != null && atualizacao.getGerente().getId() != null) {
             Usuario gerente = new Usuario();
@@ -77,9 +93,9 @@ public class UsuarioServico {
     public void deletarPorId(Long id) {
         Usuario usuario = repositorio.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        "Exclusão negada",
-                        "Não foi possível localizar o usuário de ID " + id
-                ));
+                "Exclusão negada",
+                "Não foi possível localizar o usuário de ID " + id
+        ));
 
         repositorio.delete(usuario);
     }
@@ -132,8 +148,6 @@ public class UsuarioServico {
         usuario.setSenha(dto.getSenha());
         usuario.setSalario(dto.getSalario());
         usuario.setTipoContrato(dto.getTipoContrato());
-        
-
 
         if (dto.getGerenteId() != null) {
             Usuario gerente = new Usuario();
