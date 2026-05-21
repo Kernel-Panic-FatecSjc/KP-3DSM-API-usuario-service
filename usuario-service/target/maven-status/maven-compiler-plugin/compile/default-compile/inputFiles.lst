@@ -1,4 +1,5 @@
 /app/src/main/java/com/kernelpanic/usuario_service/UsuarioApplication.java
+/app/src/main/java/com/kernelpanic/usuario_service/config/CorsConfig.java
 /app/src/main/java/com/kernelpanic/usuario_service/config/SecurityConfig.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleAtualizarUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleCadastroUsuario.java
