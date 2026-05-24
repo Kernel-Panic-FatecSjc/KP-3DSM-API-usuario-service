@@ -1,14 +1,19 @@
 package com.kernelpanic.usuario_service.entidades;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.kernelpanic.usuario_service.enums.TipoContratacao;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,5 +60,15 @@ public class Usuario {
 
     @Column(nullable = false, length = 20)
     private String salario;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_contratacao", length = 30)
+    private TipoContratacao tipoContratacao;
+
+    @Column(name = "valor_mensal", precision = 12, scale = 2)
+    private BigDecimal valorMensal;
+
+    @Column(name = "valor_hora", precision = 12, scale = 2)
+    private BigDecimal valorHora;
 
 }

@@ -1,0 +1,4 @@
+com/kernelpanic/usuario_service/enums/TipoContratacao.class
+com/kernelpanic/usuario_service/config/InternalApiKeyFilter.class
+com/kernelpanic/usuario_service/dtos/UsuarioFinanceiroDTO.class
+com/kernelpanic/usuario_service/controles/ControleUsuarioFinanceiro.class

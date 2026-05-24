@@ -1,6 +1,9 @@
 package com.kernelpanic.usuario_service.dtos;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.kernelpanic.usuario_service.enums.TipoContratacao;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +28,12 @@ public class UsuarioExibirDTO {
 
     @NotBlank(message = "O salário não pode ser nulo")
     private String salario;
+
+    private TipoContratacao tipoContratacao;
+
+    private BigDecimal valorMensal;
+
+    private BigDecimal valorHora;
 
     @NotNull(message = "A data de criação é obrigatória")
     private LocalDateTime dataCriacao;
