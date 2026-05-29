@@ -19,6 +19,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - kp-network
 
   app:
     build:
@@ -43,6 +45,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - kp-network
 
 volumes:
   mysql_data:
+
+networks:
+  kp-network:
+    external: true
