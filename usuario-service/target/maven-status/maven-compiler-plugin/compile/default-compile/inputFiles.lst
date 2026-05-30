@@ -1,12 +1,10 @@
 /app/src/main/java/com/kernelpanic/usuario_service/UsuarioApplication.java
-<<<<<<< HEAD
 /app/src/main/java/com/kernelpanic/usuario_service/config/CorsConfig.java
-=======
 /app/src/main/java/com/kernelpanic/usuario_service/config/InternalApiKeyFilter.java
->>>>>>> feat/US61-historico-auditoria
 /app/src/main/java/com/kernelpanic/usuario_service/config/SecurityConfig.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleAtualizarUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleCadastroUsuario.java
+/app/src/main/java/com/kernelpanic/usuario_service/controles/ControleDashboardAuditoria.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleDeletarUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleObterUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleObterUsuarioPorId.java
