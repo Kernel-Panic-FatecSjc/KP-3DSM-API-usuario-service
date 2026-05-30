@@ -1,8 +1,13 @@
 package com.kernelpanic.usuario_service.dtos;
 
+import java.math.BigDecimal;
+
+import com.kernelpanic.usuario_service.enums.TipoContratacao;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -27,6 +32,14 @@ public class UsuarioAtualizarDTO {
     @NotBlank(message = "O salário é obrigatório")
     @Size(max = 20, message = "O salário não pode ultrapassar 20 caracteres")
     private String salario;
+
+    private TipoContratacao tipoContratacao;
+
+    @PositiveOrZero(message = "O valor mensal nao pode ser negativo")
+    private BigDecimal valorMensal;
+
+    @PositiveOrZero(message = "O valor hora nao pode ser negativo")
+    private BigDecimal valorHora;
 
     @Size(max = 255, message = "A senha não pode ultrapassar 255 caracteres")
     private String senha;

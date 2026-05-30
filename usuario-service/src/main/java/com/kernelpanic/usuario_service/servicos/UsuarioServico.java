@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kernelpanic.usuario_service.dtos.UsuarioAtualizarDTO;
 import com.kernelpanic.usuario_service.dtos.UsuarioCadastroDTO;
 import com.kernelpanic.usuario_service.dtos.UsuarioExibirDTO;
+import com.kernelpanic.usuario_service.dtos.UsuarioFinanceiroDTO;
 import com.kernelpanic.usuario_service.entidades.Usuario;
 import com.kernelpanic.usuario_service.excecoes.EntidadeNaoEncontradaException;
 import com.kernelpanic.usuario_service.repositorios.UsuarioRepositorio;
@@ -69,11 +70,28 @@ public class UsuarioServico {
                 "O usuário de ID " + atualizacao.getId() + " não foi encontrado."
         ));
 
-        usuario.setNome(atualizacao.getNome());
-        usuario.setCargo(atualizacao.getCargo());
-        usuario.setEmail(atualizacao.getEmail());
-        usuario.setSalario(atualizacao.getSalario());
-        usuario.setTipoContrato(atualizacao.getTipoContrato());
+        if (atualizacao.getNome() != null) {
+            usuario.setNome(atualizacao.getNome());
+        }
+        if (atualizacao.getCargo() != null) {
+            usuario.setCargo(atualizacao.getCargo());
+        }
+        if (atualizacao.getEmail() != null) {
+            usuario.setEmail(atualizacao.getEmail());
+        }
+        if (atualizacao.getSalario() != null) {
+            usuario.setSalario(atualizacao.getSalario());
+        }
+        if (atualizacao.getTipoContratacao() != null) {
+            usuario.setTipoContratacao(atualizacao.getTipoContratacao());
+        }
+        if (atualizacao.getValorMensal() != null) {
+            usuario.setValorMensal(atualizacao.getValorMensal());
+        }
+        if (atualizacao.getValorHora() != null) {
+            usuario.setValorHora(atualizacao.getValorHora());
+        }
+        
 
         if (atualizacao.getGerente() != null && atualizacao.getGerente().getId() != null) {
             Usuario gerente = new Usuario();
@@ -114,8 +132,26 @@ public class UsuarioServico {
         dto.setEmail(usuario.getEmail());
         dto.setDataCriacao(usuario.getDataCriacao());
         dto.setSalario(usuario.getSalario());
-        dto.setTipoContrato(usuario.getTipoContrato());
+        dto.setTipoContratacao(usuario.getTipoContratacao());
+        dto.setValorMensal(usuario.getValorMensal());
+        dto.setValorHora(usuario.getValorHora());
 
+        return dto;
+    }
+
+    public List<UsuarioFinanceiroDTO> obterFinanceiroPorIds(List<Long> ids) {
+        return repositorio.findAllById(ids).stream()
+                .map(this::converterParaFinanceiroDTO)
+                .collect(Collectors.toList());
+    }
+
+    private UsuarioFinanceiroDTO converterParaFinanceiroDTO(Usuario usuario) {
+        UsuarioFinanceiroDTO dto = new UsuarioFinanceiroDTO();
+        dto.setId(usuario.getId());
+        dto.setNome(usuario.getNome());
+        dto.setTipoContratacao(usuario.getTipoContratacao());
+        dto.setValorMensal(usuario.getValorMensal());
+        dto.setValorHora(usuario.getValorHora());
         return dto;
     }
 
@@ -127,7 +163,9 @@ public class UsuarioServico {
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
         usuario.setSalario(dto.getSalario());
-        usuario.setTipoContrato(dto.getTipoContrato());
+        usuario.setTipoContratacao(dto.getTipoContratacao());
+        usuario.setValorMensal(dto.getValorMensal());
+        usuario.setValorHora(dto.getValorHora());
 
         if (dto.getGerenteId() != null) {
             Usuario gerente = new Usuario();
@@ -147,7 +185,11 @@ public class UsuarioServico {
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
         usuario.setSalario(dto.getSalario());
-        usuario.setTipoContrato(dto.getTipoContrato());
+        usuario.setTipoContratacao(dto.getTipoContratacao());
+        usuario.setValorMensal(dto.getValorMensal());
+        usuario.setValorHora(dto.getValorHora());
+        
+
 
         if (dto.getGerenteId() != null) {
             Usuario gerente = new Usuario();

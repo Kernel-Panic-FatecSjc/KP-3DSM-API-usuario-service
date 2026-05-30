@@ -1,16 +1,23 @@
 /app/src/main/java/com/kernelpanic/usuario_service/UsuarioApplication.java
+<<<<<<< HEAD
 /app/src/main/java/com/kernelpanic/usuario_service/config/CorsConfig.java
+=======
+/app/src/main/java/com/kernelpanic/usuario_service/config/InternalApiKeyFilter.java
+>>>>>>> feat/US61-historico-auditoria
 /app/src/main/java/com/kernelpanic/usuario_service/config/SecurityConfig.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleAtualizarUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleCadastroUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleDeletarUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleObterUsuario.java
 /app/src/main/java/com/kernelpanic/usuario_service/controles/ControleObterUsuarioPorId.java
+/app/src/main/java/com/kernelpanic/usuario_service/controles/ControleUsuarioFinanceiro.java
 /app/src/main/java/com/kernelpanic/usuario_service/dtos/ErroRespostaDTO.java
 /app/src/main/java/com/kernelpanic/usuario_service/dtos/UsuarioAtualizarDTO.java
 /app/src/main/java/com/kernelpanic/usuario_service/dtos/UsuarioCadastroDTO.java
 /app/src/main/java/com/kernelpanic/usuario_service/dtos/UsuarioExibirDTO.java
+/app/src/main/java/com/kernelpanic/usuario_service/dtos/UsuarioFinanceiroDTO.java
 /app/src/main/java/com/kernelpanic/usuario_service/entidades/Usuario.java
+/app/src/main/java/com/kernelpanic/usuario_service/enums/TipoContratacao.java
 /app/src/main/java/com/kernelpanic/usuario_service/excecoes/EntidadeNaoEncontradaException.java
 /app/src/main/java/com/kernelpanic/usuario_service/excecoes/GlobalExceptionHandler.java
 /app/src/main/java/com/kernelpanic/usuario_service/modelos/StringVerificadorNulo.java
