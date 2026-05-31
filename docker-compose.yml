@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
 
     ports:
-      - "3311:3306"
+      - "3313:3306"
 
     volumes:
       - mysql_data:/var/lib/mysql
@@ -37,6 +37,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - INTERNAL_API_KEY=kp-internal-key
 
     volumes:
       - ./usuario-service:/app
@@ -46,7 +47,9 @@ services:
       db:
         condition: service_healthy
     networks:
-      - kp-network
+      kp-network:
+        aliases:
+          - usuario-service-app
 
 volumes:
   mysql_data:
