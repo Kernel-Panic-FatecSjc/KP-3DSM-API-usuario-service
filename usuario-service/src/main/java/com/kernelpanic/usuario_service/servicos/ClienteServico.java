@@ -1,5 +1,6 @@
 package com.kernelpanic.usuario_service.servicos;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -62,6 +63,18 @@ public class ClienteServico {
                 .toList();
     }
 
+    public List<ClienteExibirDTO> listarPorProjetoIds(List<Long> projetoIds) {
+        if (projetoIds == null || projetoIds.isEmpty()) {
+            return List.of();
+        }
+
+        return clienteRepositorio.findDistinctByProjetosProjetoIdIn(projetoIds)
+                .stream()
+                .sorted(Comparator.comparing(Cliente::getId, Comparator.nullsLast(Long::compareTo)))
+                .map(this::toDTO)
+                .toList();
+    }
+
     public ClienteExibirDTO buscarPorId(Long id) {
         Cliente cliente = buscarEntidade(id);
         return toDTO(cliente);
@@ -107,6 +120,10 @@ public class ClienteServico {
     }
 
     private void vincularProjeto(Cliente cliente, Long projetoId) {
+        if (clienteProjetoRepositorio.existsByProjetoIdAndCliente_IdNot(projetoId, cliente.getId())) {
+            throw new IllegalArgumentException("Projeto " + projetoId + " ja esta vinculado a outro cliente.");
+        }
+
         ClienteProjeto vinculo = new ClienteProjeto();
         vinculo.setCliente(cliente);
         vinculo.setProjetoId(projetoId);

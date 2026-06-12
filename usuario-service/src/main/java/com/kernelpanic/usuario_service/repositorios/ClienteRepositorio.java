@@ -10,5 +10,6 @@ import com.kernelpanic.usuario_service.entidades.Cliente;
 public interface ClienteRepositorio extends JpaRepository<Cliente, Long> {
     Optional<Cliente> findByCnpj(String cnpj);
     List<Cliente> findByAtivoTrue();
+    List<Cliente> findDistinctByProjetosProjetoIdIn(List<Long> projetoIds);
     boolean existsByCnpj(String cnpj);
 }

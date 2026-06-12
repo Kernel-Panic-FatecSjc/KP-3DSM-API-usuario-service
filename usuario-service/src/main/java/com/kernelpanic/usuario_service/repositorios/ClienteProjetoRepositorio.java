@@ -13,4 +13,6 @@ public interface ClienteProjetoRepositorio extends JpaRepository<ClienteProjeto,
     void deleteByClienteIdAndProjetoId(Long clienteId, Long projetoId);
 
     boolean existsByClienteIdAndProjetoId(Long clienteId, Long projetoId);
+
+    boolean existsByProjetoIdAndCliente_IdNot(Long projetoId, Long clienteId);
 }

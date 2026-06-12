@@ -15,12 +15,13 @@ VALUES
 AS new_data
 ON DUPLICATE KEY UPDATE nome = new_data.nome;
 
+DELETE FROM cliente_projeto WHERE cliente_id = 3 AND projeto_id = 2;
+
 INSERT INTO cliente_projeto (id, cliente_id, projeto_id)
 VALUES
   (1, 1, 1),
   (2, 1, 2),
-  (3, 2, 3),
-  (4, 3, 2)
+  (3, 2, 3)
 AS new_data
 ON DUPLICATE KEY UPDATE projeto_id = new_data.projeto_id;
 
