@@ -47,8 +47,6 @@ public class Cliente {
     @CreationTimestamp
     private LocalDateTime dataCriacao;
 
-    // IDs dos projetos ficam na tabela cliente_projeto
-    // Sem FK cross-service para o projeto-service
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClienteProjeto> projetos = new ArrayList<>();
 }

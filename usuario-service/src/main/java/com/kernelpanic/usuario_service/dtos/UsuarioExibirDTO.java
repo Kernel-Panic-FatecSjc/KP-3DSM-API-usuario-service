@@ -3,6 +3,8 @@ package com.kernelpanic.usuario_service.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.kernelpanic.usuario_service.enums.TipoContratacao;
 
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +21,10 @@ public class UsuarioExibirDTO {
 
     @NotBlank(message = "O nome do usuario é obrigatório")
     private String nome;
+
+    @CPF(message = "CPF inválido")
+    @NotBlank(message = "CPF é obrigatório")
+    private String cpf;
 
     @NotBlank(message = "O cargo é obrigatório")
     private String cargo;

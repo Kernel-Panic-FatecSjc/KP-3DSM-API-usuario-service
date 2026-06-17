@@ -2,6 +2,8 @@ package com.kernelpanic.usuario_service.dtos;
 
 import java.math.BigDecimal;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.kernelpanic.usuario_service.enums.TipoContratacao;
 
 import jakarta.validation.constraints.Email;
@@ -18,6 +20,10 @@ public class UsuarioCadastroDTO {
     @NotBlank(message = "O nome do usuario é obrigatório")
     @Size(max = 100, message = "O nome não pode exceder 100 caracteres")
     private String nome;
+
+    @CPF(message = "CPF inválido")
+    @NotBlank(message = "CPF é obrigatório")
+    private String cpf;
 
     @NotBlank(message = "O cargo é obrigatório")
     @Size(max = 30, message = "O cargo não pode passar de 30 caracteres")
