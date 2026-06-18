@@ -1,5 +1,6 @@
 com/kernelpanic/usuario_service/enums/TipoContratacao.class
 com/kernelpanic/usuario_service/dtos/ClienteDTO$ClienteCadastroDTO.class
+com/kernelpanic/usuario_service/dtos/ClienteDTO$ClienteFinanceiroDTO.class
 com/kernelpanic/usuario_service/config/CorsConfig.class
 com/kernelpanic/usuario_service/controles/ControleCadastroCliente.class
 com/kernelpanic/usuario_service/entidades/Cliente.class

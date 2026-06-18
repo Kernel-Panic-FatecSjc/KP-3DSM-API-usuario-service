@@ -1,4 +1,3 @@
--- Insert de Usuários
 INSERT INTO usuario (
     id,
     nome,
@@ -69,12 +68,25 @@ VALUES
     1,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
+),
+(
+    5,
+    'Marina Oliveira',
+    '55544433322',
+    'marina.oliveira@kernelpanic.com',
+    '$2a$10$W3ZXrhgR5l4qiui8FVIsIOJpwpX5A59Thsr8Ugq2BAvuM5XXTde1W',
+    'ROLE_GESTOR',
+    true,
+    '8500',
+    'CLT',
+    NULL,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
 )
 ON DUPLICATE KEY UPDATE
     cpf = VALUES(cpf),
     tipo_contratacao = VALUES(tipo_contratacao);
 
--- Insert de Clientes
 INSERT INTO cliente (
     id,
     nome,
