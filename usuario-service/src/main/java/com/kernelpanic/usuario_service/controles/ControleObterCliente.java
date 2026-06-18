@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteExibirDTO;
+import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteFinanceiroDTO;
 import com.kernelpanic.usuario_service.servicos.ClienteServico;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class ControleObterCliente {
     @GetMapping("/todos")
     public ResponseEntity<List<ClienteExibirDTO>> listarTodos() {
         return ResponseEntity.ok(clienteServico.listarTodos());
+    }
+
+    @GetMapping("/financeiro")
+    public ResponseEntity<List<ClienteFinanceiroDTO>> listarFinanceiroPorCliente() {
+        return ResponseEntity.ok(clienteServico.listarFinanceiroPorCliente());
     }
 
     @GetMapping("/projetos")

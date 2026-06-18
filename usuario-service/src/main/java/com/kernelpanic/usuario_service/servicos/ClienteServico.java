@@ -1,14 +1,22 @@
 package com.kernelpanic.usuario_service.servicos;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteAtualizarDTO;
 import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteCadastroDTO;
 import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteExibirDTO;
+import com.kernelpanic.usuario_service.dtos.ClienteDTO.ClienteFinanceiroDTO;
 import com.kernelpanic.usuario_service.entidades.Cliente;
 import com.kernelpanic.usuario_service.entidades.ClienteProjeto;
 import com.kernelpanic.usuario_service.excecoes.EntidadeNaoEncontradaException;
@@ -23,6 +31,13 @@ public class ClienteServico {
 
     private final ClienteRepositorio clienteRepositorio;
     private final ClienteProjetoRepositorio clienteProjetoRepositorio;
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${projeto.service.url:http://spring-api-container:8082}")
+    private String projetoServiceUrl;
+
+    @Value("${internal.api-key:}")
+    private String internalApiKey;
 
     @Transactional
     public ClienteExibirDTO cadastrar(ClienteCadastroDTO dto) {
@@ -60,6 +75,14 @@ public class ClienteServico {
         return clienteRepositorio.findAll()
                 .stream()
                 .map(this::toDTO)
+                .toList();
+    }
+
+    public List<ClienteFinanceiroDTO> listarFinanceiroPorCliente() {
+        return clienteRepositorio.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Cliente::getId, Comparator.nullsLast(Long::compareTo)))
+                .map(this::toFinanceiroDTO)
                 .toList();
     }
 
@@ -155,5 +178,82 @@ public class ClienteServico {
                 c.getAtivo(),
                 projetoIds
         );
+    }
+
+    private ClienteFinanceiroDTO toFinanceiroDTO(Cliente cliente) {
+        BigDecimal valorContratado = BigDecimal.ZERO;
+        BigDecimal custoReal = BigDecimal.ZERO;
+        BigDecimal lucro = BigDecimal.ZERO;
+
+        List<Long> projetoIds = clienteProjetoRepositorio
+                .findByClienteId(cliente.getId())
+                .stream()
+                .map(ClienteProjeto::getProjetoId)
+                .toList();
+
+        for (Long projetoId : projetoIds) {
+            Map<String, Object> projeto = buscarProjeto(projetoId);
+
+            BigDecimal valorContratadoProjeto = obterValor(projeto, "valorContratado", "valor_contratado");
+            BigDecimal custoRealProjeto = obterValor(projeto, "custoReal", "custo_real");
+            BigDecimal lucroProjeto = obterValor(projeto, "lucro", "lucroProjeto", "lucro_projeto");
+            if (!possuiValor(projeto, "lucro", "lucroProjeto", "lucro_projeto")) {
+                lucroProjeto = valorContratadoProjeto.subtract(custoRealProjeto);
+            }
+
+            valorContratado = valorContratado.add(valorContratadoProjeto);
+            custoReal = custoReal.add(custoRealProjeto);
+            lucro = lucro.add(lucroProjeto);
+        }
+
+        return new ClienteFinanceiroDTO(
+                cliente.getId(),
+                cliente.getNome(),
+                valorContratado,
+                custoReal,
+                lucro
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> buscarProjeto(Long projetoId) {
+        String url = projetoServiceUrl + "/projeto/" + projetoId;
+
+        HttpHeaders headers = new HttpHeaders();
+        if (internalApiKey != null && !internalApiKey.isBlank()) {
+            headers.set("X-Internal-Api-Key", internalApiKey);
+        }
+
+        Object body = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Object.class).getBody();
+        if (body instanceof Map<?, ?> map) {
+            return (Map<String, Object>) map;
+        }
+
+        return Map.of();
+    }
+
+    private BigDecimal obterValor(Map<String, Object> dados, String... chaves) {
+        for (String chave : chaves) {
+            Object valor = dados.get(chave);
+            if (valor instanceof Number number) {
+                return new BigDecimal(number.toString());
+            }
+            if (valor instanceof String texto && !texto.isBlank()) {
+                return new BigDecimal(texto);
+            }
+        }
+
+        return BigDecimal.ZERO;
+    }
+
+    private boolean possuiValor(Map<String, Object> dados, String... chaves) {
+        for (String chave : chaves) {
+            Object valor = dados.get(chave);
+            if (valor != null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

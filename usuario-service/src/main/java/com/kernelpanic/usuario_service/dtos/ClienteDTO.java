@@ -66,5 +66,13 @@ public class ClienteDTO {
         @NotNull
         List<Long> projetoIds
     ) {}
+
+    public record ClienteFinanceiroDTO(
+        Long clienteId,
+        String nome,
+        java.math.BigDecimal valorContratado,
+        java.math.BigDecimal custoReal,
+        java.math.BigDecimal lucro
+    ) {}
 }
 
