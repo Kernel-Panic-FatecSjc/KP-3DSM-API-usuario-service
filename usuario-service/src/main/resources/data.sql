@@ -111,7 +111,7 @@ VALUES
 (
     2,
     'TechVision Solutions',
-    '98765432000160',
+    '98765432000198',
     'vendas@techvision.com.br',
     '1144445555',
     'Desenvolvedor de software especializado em cloud',
@@ -131,7 +131,7 @@ VALUES
 (
     4,
     'DataFlow Analytics',
-    '45678901000123',
+    '45678901000175',
     'suporte@dataflow.com.br',
     '1166667777',
     'Especialista em análise de dados e BI',
