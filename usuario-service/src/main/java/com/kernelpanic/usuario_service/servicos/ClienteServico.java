@@ -108,7 +108,14 @@ public class ClienteServico {
         Cliente cliente = buscarEntidade(id);
 
         if (dto.nome() != null) cliente.setNome(dto.nome());
-        if (dto.cnpj() != null) cliente.setCnpj(dto.cnpj());
+
+        if (dto.cnpj() != null) {
+            if (!cliente.getCnpj().equals(dto.cnpj()) && clienteRepositorio.existsByCnpj(dto.cnpj())) {
+                throw new IllegalArgumentException("Já existe um cliente com esse CNPJ.");
+            }
+            cliente.setCnpj(dto.cnpj());
+        }
+
         if (dto.email() != null) cliente.setEmail(dto.email());
         if (dto.telefone() != null) cliente.setTelefone(dto.telefone());
         if (dto.observacao() != null) cliente.setObservacao(dto.observacao());
@@ -197,6 +204,7 @@ public class ClienteServico {
             BigDecimal valorContratadoProjeto = obterValor(projeto, "valorContratado", "valor_contratado");
             BigDecimal custoRealProjeto = obterValor(projeto, "custoReal", "custo_real");
             BigDecimal lucroProjeto = obterValor(projeto, "lucro", "lucroProjeto", "lucro_projeto");
+
             if (!possuiValor(projeto, "lucro", "lucroProjeto", "lucro_projeto")) {
                 lucroProjeto = valorContratadoProjeto.subtract(custoRealProjeto);
             }
@@ -224,7 +232,13 @@ public class ClienteServico {
             headers.set("X-Internal-Api-Key", internalApiKey);
         }
 
-        Object body = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Object.class).getBody();
+        Object body = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                Object.class
+        ).getBody();
+
         if (body instanceof Map<?, ?> map) {
             return (Map<String, Object>) map;
         }
@@ -235,9 +249,11 @@ public class ClienteServico {
     private BigDecimal obterValor(Map<String, Object> dados, String... chaves) {
         for (String chave : chaves) {
             Object valor = dados.get(chave);
+
             if (valor instanceof Number number) {
                 return new BigDecimal(number.toString());
             }
+
             if (valor instanceof String texto && !texto.isBlank()) {
                 return new BigDecimal(texto);
             }
@@ -248,12 +264,12 @@ public class ClienteServico {
 
     private boolean possuiValor(Map<String, Object> dados, String... chaves) {
         for (String chave : chaves) {
-            Object valor = dados.get(chave);
-            if (valor != null) {
+            if (dados.get(chave) != null) {
                 return true;
             }
         }
 
         return false;
     }
-}
+}    
+

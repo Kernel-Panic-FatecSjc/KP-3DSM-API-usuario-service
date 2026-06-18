@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.kernelpanic.usuario_service.validacoes.CnpjValido;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +30,7 @@ public class Cliente {
     @Column(nullable = false, length = 150)
     private String nome;
 
+    @CnpjValido
     @Column(nullable = false, unique = true, length = 18)
     private String cnpj;
 
@@ -47,8 +50,6 @@ public class Cliente {
     @CreationTimestamp
     private LocalDateTime dataCriacao;
 
-    // IDs dos projetos ficam na tabela cliente_projeto
-    // Sem FK cross-service para o projeto-service
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClienteProjeto> projetos = new ArrayList<>();
 }

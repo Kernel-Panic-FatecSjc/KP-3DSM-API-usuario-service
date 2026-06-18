@@ -33,3 +33,5 @@
 /app/src/main/java/com/kernelpanic/usuario_service/repositorios/UsuarioRepositorio.java
 /app/src/main/java/com/kernelpanic/usuario_service/servicos/ClienteServico.java
 /app/src/main/java/com/kernelpanic/usuario_service/servicos/UsuarioServico.java
+/app/src/main/java/com/kernelpanic/usuario_service/validacoes/CnpjValidator.java
+/app/src/main/java/com/kernelpanic/usuario_service/validacoes/CnpjValido.java
