@@ -85,7 +85,14 @@ public class ClienteServico {
         Cliente cliente = buscarEntidade(id);
 
         if (dto.nome() != null) cliente.setNome(dto.nome());
-        if (dto.cnpj() != null) cliente.setCnpj(dto.cnpj());
+
+        if (dto.cnpj() != null) {
+            if (!cliente.getCnpj().equals(dto.cnpj()) && clienteRepositorio.existsByCnpj(dto.cnpj())) {
+                throw new IllegalArgumentException("Já existe um cliente com esse CNPJ.");
+            }
+            cliente.setCnpj(dto.cnpj());
+        }
+
         if (dto.email() != null) cliente.setEmail(dto.email());
         if (dto.telefone() != null) cliente.setTelefone(dto.telefone());
         if (dto.observacao() != null) cliente.setObservacao(dto.observacao());

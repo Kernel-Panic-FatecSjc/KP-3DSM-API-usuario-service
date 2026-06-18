@@ -1,3 +1,4 @@
+-- Insert de Usuários
 INSERT INTO usuario (
     id,
     nome,
@@ -69,7 +70,63 @@ VALUES
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
 )
-AS new_data
 ON DUPLICATE KEY UPDATE
-    cpf = new_data.cpf,
-    tipo_contratacao = new_data.tipo_contratacao;
+    cpf = VALUES(cpf),
+    tipo_contratacao = VALUES(tipo_contratacao);
+
+-- Insert de Clientes
+INSERT INTO cliente (
+    id,
+    nome,
+    cnpj,
+    email,
+    telefone,
+    observacao,
+    ativo,
+    data_criacao
+)
+VALUES
+(
+    1,
+    'Acme Corporation',
+    '12345678000195',
+    'contato@acme.com',
+    '1133334444',
+    'Cliente principal de projetos internos',
+    true,
+    CURRENT_TIMESTAMP
+),
+(
+    2,
+    'TechVision Solutions',
+    '98765432000160',
+    'vendas@techvision.com.br',
+    '1144445555',
+    'Desenvolvedor de software especializado em cloud',
+    true,
+    CURRENT_TIMESTAMP
+),
+(
+    3,
+    'Global Consultoria Ltda',
+    '11222333000181',
+    'info@globalconsultoria.com.br',
+    '1155556666',
+    'Empresa de consultoria empresarial',
+    true,
+    CURRENT_TIMESTAMP
+),
+(
+    4,
+    'DataFlow Analytics',
+    '45678901000123',
+    'suporte@dataflow.com.br',
+    '1166667777',
+    'Especialista em análise de dados e BI',
+    true,
+    CURRENT_TIMESTAMP
+)
+ON DUPLICATE KEY UPDATE
+    nome = VALUES(nome),
+    email = VALUES(email),
+    telefone = VALUES(telefone);

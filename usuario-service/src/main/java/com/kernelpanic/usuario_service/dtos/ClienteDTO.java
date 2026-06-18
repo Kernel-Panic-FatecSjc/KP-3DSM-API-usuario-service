@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.kernelpanic.usuario_service.validacoes.CnpjValido;
 
 public class ClienteDTO {
 
@@ -16,7 +17,8 @@ public class ClienteDTO {
         String nome,
 
         @NotBlank(message = "CNPJ é obrigatório")
-        @Size(max = 18, message = "CNPJ inválido")
+        @Size(max = 18, message = "CNPJ invalido")
+        @CnpjValido
         String cnpj,
 
         @Email(message = "E-mail inválido")
@@ -47,6 +49,7 @@ public class ClienteDTO {
         String nome,
 
         @Size(max = 18)
+        @CnpjValido
         String cnpj,
 
         @Email
